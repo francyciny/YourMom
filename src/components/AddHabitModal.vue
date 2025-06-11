@@ -18,7 +18,7 @@
                 <span class="habit-name">{{ habit.name }}</span>
             </label>
             <label class="reminder-icon" @click="habit.reminder = !habit.reminder">
-              { habit.reminder ? '🔔' : '🔕' }}
+              {{ habit.reminder ? '🔔' : '🔕' }}
             </label>
           </li>
         </ul>
