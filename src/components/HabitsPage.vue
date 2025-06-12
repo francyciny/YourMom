@@ -31,6 +31,7 @@
         @toggle-reminder="emitToggleReminder(index)"
       />
     </div>
+    
     <div v-if="showCalendar === false" class="add-habit-wrapper">
       <div class="plus-icon-box">
         <button class="add-habit-btn" @click="showAdd()">+</button>
@@ -73,11 +74,11 @@
       momImage() {
         const completed = this.habits.filter((h) => h.completed).length;
         if (completed === this.habits.length && completed > 0) return '/habits/mom-happy.jpg';
-        if (this.habits.length === 0) return '/habits/mom-angry.jpg'; // If no habits, mom is angry
+        if (this.habits.length === 0) return '/habits/mom-angry.jpg'; 
         if (completed / this.habits.length < 1 / 3) return '/habits/mom-angry.jpg';
         if (completed / this.habits.length < 2 / 3) return '/habits/mom-sad.jpg';
         if (completed / this.habits.length < 1) return '/habits/mom-neutral.jpg';
-        return '/habits/mom-angry.jpg'; // Fallback
+        return '/habits/mom-angry.jpg'; 
       },
       momQuote() {
         const completed = this.habits.filter((h) => h.completed).length;
@@ -270,7 +271,7 @@
 
   .habits-scrollable {
     max-height: 160px; 
-    overflow-y: auto;
+    overflow-y: scroll;
     margin-top: 10px;
     padding-right: 5px;
   }
