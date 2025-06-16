@@ -25,7 +25,15 @@
       </div>
       <p class="quote">Your mom is gonna be proud of you</p>
     </div>
-  </div>
+    <div v-if="showAlert" class="alert-overlay">
+      <div class="alert-content">
+        <p class="alert-title">Please select at least one habit to add.</p>
+        <div class="alert-actions">
+            <button @click="noAlert()" class="alert-button got-it">Got it!</button>
+        </div>
+      </div>
+    </div>
+  </div> 
 </template>
   
 <script>
@@ -40,6 +48,7 @@
           { name: 'Sleep early', selected: false, reminder: false },
           { name: 'Read a book', selected: false, reminder: false },
         ],
+        showAlert: false,
       };
     },
     props: {
@@ -66,10 +75,17 @@
         const selectedHabits = this.availableHabits
           .filter((h) => h.selected)
           .map((h) => ({ name: h.name, completed: false, reminder: h.reminder }));
+        if (selectedHabits.length === 0) {
+          this.showAlert = true;
+        } else {
           document.getElementsByClassName("modal-content")[0].classList.add("slide-down");
-        setTimeout(() => {
-          this.$emit('add', selectedHabits);
-        }, 300);
+          setTimeout(() => {
+            this.$emit('add', selectedHabits);
+          }, 300);
+        }
+      },
+      noAlert() {
+        this.showAlert = false;
       },
     },
   };
@@ -279,5 +295,58 @@
   }
   .icon {
     height: 30px;
+  }
+
+  .alert-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    padding: 1rem; 
+  }
+
+  .alert-content {
+    background: #fefefe;
+    padding: 1rem; 
+    width: 100%;
+    max-width: 300px; 
+    border-radius: 20px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1); 
+    text-align: center;
+  }
+
+  .alert-title {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #000;
+  }
+
+  .alert-actions {
+    display: flex;
+    flex-direction: row; 
+    border-top: 1px solid #eee; 
+  }
+
+  .alert-button {
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    font-size: 1.05rem;
+    cursor: pointer;
+    width: 100%; 
+    text-align: center;
+  }
+
+  .alert-button.got-it {
+    color: #007AFF; 
+    font-weight: normal; 
   }
 </style>
